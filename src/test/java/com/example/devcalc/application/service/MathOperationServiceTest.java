@@ -51,6 +51,6 @@ class MathOperationServiceTest {
                 ArithmeticException.class,
                 () -> service.operation(10, 0, OperationEnum.DIVIDE)
         );
-        assertEquals("Cannot divide by zero.", exception.getMessage());
+        assertEquals("Cannot divide by zero", exception.getMessage());
     }
 }
