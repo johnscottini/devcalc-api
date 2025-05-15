@@ -35,6 +35,11 @@ class MathOperationServiceTest {
     }
 
     @Test
+    void shouldThrowError() {
+        assertThrows(IllegalArgumentException.class, () -> service.operation(2, 3, OperationEnum.valueOf("TESTE")));
+    }
+
+    @Test
     void shouldDivideNumbersCorrectly() {
         double result = service.operation(10, 2, OperationEnum.DIVIDE);
         assertEquals(5, result);
