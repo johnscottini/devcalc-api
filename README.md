@@ -5,4 +5,4 @@ The build tool chosen is Spring, because of the facility to create and run a web
 
 To execute the application locally, select the Main Class on the run configurations and use the API.
 
-I created a pipeline to execute the unit tests and build the project
+I created a pipeline to execute the unit tests and also build the project
