@@ -48,3 +48,29 @@ jobs:
 
       - name: Executar testes com Maven
         run: mvn test
+
+
+  package:
+    name: Gerar pacote .jar
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gerar .jar com Maven
+        run: mvn package
+
+  deploy:
+    name: Deploy fictício
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    steps:
+      - name: Exibir mensagem de deploy
+        run: echo "Deploy realizado com sucesso"
