@@ -19,11 +19,11 @@ public class MathOperationService {
             }
             case DIVIDE -> {
                 if (b == 0) {
-                    throw new ArithmeticException("Cannot divide by zero.");
+                    throw new ArithmeticException("Cannot divide by zero");
                 }
                 return a / b;
             }
         }
-        throw new IllegalArgumentException("Operation not mapped.");
+        throw new IllegalArgumentException("Operation not mapped");
     }
 }
