@@ -33,14 +33,12 @@ jobs:
 
       - name: Build com Maven
         run: mvn clean install
-
+        
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          maven_version: "3.9.9"
-          jdk_major_version: "17"
-          jdk_distribution: "temurin"
+        env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   test:
     name: Executar testes
     runs-on: ubuntu-latest
