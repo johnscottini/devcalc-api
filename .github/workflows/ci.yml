@@ -10,75 +10,43 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkout:
-    name: Checkout código
+  build-test-analyze:
+    name: Build, Test e Análise SonarCloud
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
-
-  build:
-    name: Build do projeto
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Importante para o SonarCloud ter acesso ao histórico completo
 
       - name: Configurar Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
 
-      - name: Build com Maven
-        run: mvn clean install
-
-      - name: Cache SonarQube packages
+      - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
-            path: ~/.sonar/cache
-            key: ${{ runner.os }}-sonar
-            restore-keys: ${{ runner.os }}-sonar
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-              path: ~/.m2
-              key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-              restore-keys: ${{ runner.os }}-m2
-
-      - name: Build and analyze
+      - name: Build, teste e análise SonarCloud
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            SONAR_HOST_URL: https://sonarcloud.io
-            SONAR_ORGANIZATION: jonathan-scottini
-            SONAR_PROJECT_KEY: devcalc-api
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-
-  test:
-    name: Executar testes
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Configurar Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Executar testes com Maven
-        run: mvn test
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=jonathan-scottini \
+          -Dsonar.projectKey=devcalc-api
 
   package:
     name: Gerar pacote .jar
     runs-on: ubuntu-latest
-    needs: test
+    needs: build-test-analyze
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -88,14 +56,15 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
 
       - name: Gerar .jar com Maven
-        run: mvn package
+        run: mvn package -DskipTests
 
   deploy:
     name: Deploy fictício
     runs-on: ubuntu-latest
-    needs: [build, test]
+    needs: package
     steps:
       - name: Exibir mensagem de deploy
         run: echo "Deploy realizado com sucesso"
