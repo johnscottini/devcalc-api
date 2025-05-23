@@ -1,4 +1,4 @@
-A diferença entre Workflow e Action:
+# A diferença entre Workflow e Action:
 
 Action é a ação executada, um bloco de código que realiza uma tarefa específica.
 Ela deve ter um propósito definido e pequeno, não executando múltiplas ações diferentes.
