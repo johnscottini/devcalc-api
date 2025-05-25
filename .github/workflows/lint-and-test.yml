@@ -1,18 +1,18 @@
-name: Lint and Test
+name: Lint, Test and Analyze
 
 on:
   workflow_call:
 
 jobs:
-  lint-and-test:
-    name: Lint e Testes
+  lint-test-analyze:
+    name: Lint, Testes e Análise SonarCloud
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Importante para o SonarCloud ter acesso ao histórico completo
+          fetch-depth: 0
 
       - name: Configurar Java
         uses: actions/setup-java@v3
