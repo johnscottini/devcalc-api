@@ -41,6 +41,9 @@ jobs:
           java-version: '17'
           cache: maven
 
+      - name: Provocar falha intencional
+        run: exit 1
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
