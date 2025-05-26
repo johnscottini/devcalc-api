@@ -41,3 +41,7 @@ The pipeline is defined in the `.github/workflows/ci.yml` file and includes the 
 ### Identificando problemas
 - Após realizar uma alteração no workflow, a pipeline enfrentou um problema e não rodou. Pela página de  actinos consegui identificar que o problema está relacionado a um job específico. Como já era de conhecimento qual job especificamente havia parado, foi fácil entrar no workflow e corrigir o problema, removendo a linha que causava o erro proposital.
 Outros momentos que usei essa função, foi quando estava configurando o SonarCloud da aplicação para fazer a cobertura e lin do código, e obtive erros pois o workflow que executa o sonar estava configurado incorretamente.
+
+### Diferenças entre execução manual e automática
+Acredito que a principal diferença é a forma que é executada, quando a execução é automática, os parâmetros e condicionais de execução do workflow não são aplicados.
+Portanto, todo o fluxo é seguido, já que parâmetros só são informados na execução manual. Na execuçao manual o usuário pode definir quais parâmetros serão aplicados por meio da seleção, podendo modificar o workflow executado.
