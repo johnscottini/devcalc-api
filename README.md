@@ -35,3 +35,7 @@ The pipeline is defined in the `.github/workflows/ci.yml` file and includes the 
     - On pull requests that modify files in the `src/` directory.
 - **Manual Execution**
     - The pipeline supports manual runs using the **Run workflow** button in the Actions tab (thanks to `workflow_dispatch`).
+
+### Identificando problemas
+- Após realizar uma alteração no workflow, a pipeline enfrentou um problema e não rodou. Pela página de  actinos consegui identificar que o problema está relacionado a um job específico. Como já era de conhecimento qual job especificamente havia parado, foi fácil entrar no workflow e corrigir o problema, removendo a linha que causava o erro proposital.
+Outros momentos que usei essa função, foi quando estava configurando o SonarCloud da aplicação para fazer a cobertura e lin do código, e obtive erros pois o workflow que executa o sonar estava configurado incorretamente.
