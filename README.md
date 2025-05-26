@@ -1,3 +1,5 @@
+[![CI](https://github.com/johnscottini/devcalc-api/actions/workflows/ci.yml/badge.svg)](https://github.com/johnscottini/devcalc-api/actions/workflows/ci.yml)
+
 # devcalc-api
 
 The goal of this project is to practice CI/CD pipelines.  
