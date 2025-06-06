@@ -1,0 +1,26 @@
+name: Env context demo
+on: [push]
+env:
+  STAGE: test
+jobs:
+      my-job:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Print Actor and OS
+            run: |
+              echo "Runner OS: ${{ runner.os }}"
+              echo "Actor: ${{ github.actor }}"
+
+      test-variables:
+        runs-on: ubuntu-latest
+        env:
+          STAGE: job-level
+        steps:
+          - name: Show STAGE at job level
+            run: echo "STAGE = $STAGE"
+          - name: Override STAGE in step
+            env:
+              STAGE: step-level
+            run: echo "STAGE (step override) = $STAGE"
+          - name: Show STAGE again at job level
+            run: echo "STAGE (after step override) = $STAGE"
