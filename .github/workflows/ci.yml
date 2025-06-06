@@ -78,8 +78,8 @@ jobs:
         run: mvn package -DskipTests
 
   deploy:
-    name: Deploy fictício
-    runs-on: ubuntu-latest
+    name: ${{ vars.DEPLOYNAME }}
+    runs-on: ${{ vars.RUNSON }}
     needs: package
     steps:
       - name: Exibir mensagem de deploy
