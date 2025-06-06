@@ -1,0 +1,23 @@
+name: Test Self-Hosted Runner
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Mostrar informações do sistema
+        run: |
+          systeminfo
+          java -version
+
+      - name: Instalar software adicional com Chocolatey
+        run: |
+          choco install curl -y
+          curl --version
