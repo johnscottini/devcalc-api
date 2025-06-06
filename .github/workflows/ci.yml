@@ -1,5 +1,9 @@
 name: CI Pipeline
 
+permissions:
+  issues: write
+
+
 on:
   workflow_dispatch:
     inputs:
@@ -82,5 +86,27 @@ jobs:
     runs-on: ${{ vars.RUNSON }}
     needs: package
     steps:
+      - name: Verificar se variável DEPLOYNAME está definida
+        id: check_deployname
+        run: |
+          if [ -z "${{ vars.DEPLOYNAME }}" ]; then
+            echo "missing=true" >> $GITHUB_OUTPUT
+          else
+            echo "missing=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Criar issue se DEPLOYNAME estiver ausente
+        if: steps.check_deployname.outputs.missing == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X POST https://api.github.com/repos/${{ github.repository }}/issues \
+          -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -d '{
+            "title": "Variável DEPLOYNAME não está definida",
+            "body": "O workflow falhou ao tentar executar o deploy porque a variável `DEPLOYNAME` está ausente. Por favor, verifique as variáveis de ambiente definidas.",
+            "labels": ["bug", "ci"]
+          }'
       - name: Exibir mensagem de deploy
         run: echo "Deploy realizado com sucesso"
