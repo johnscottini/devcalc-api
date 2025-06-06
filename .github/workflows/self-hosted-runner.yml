@@ -20,4 +20,4 @@ jobs:
       - name: Instalar software adicional com Chocolatey
         run: |
           choco install curl -y
-          curl --version
+          curl.exe --version
