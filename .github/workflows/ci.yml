@@ -3,7 +3,6 @@ name: CI Pipeline
 permissions:
   issues: write
 
-
 on:
   workflow_dispatch:
     inputs:
@@ -21,6 +20,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   run-tests:
@@ -61,7 +61,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=jonathan-scottini \
           -Dsonar.projectKey=johnscottini_devcalc-api \
-          -Dsonar.branch.name=main
+          -Dsonar.branch.name=${{ github.ref_name }}
 
   package:
     name: Gerar pacote .jar
@@ -81,9 +81,21 @@ jobs:
       - name: Gerar .jar com Maven
         run: mvn package -DskipTests
 
-  deploy:
-    name: ${{ vars.DEPLOYNAME }}
-    runs-on: ${{ vars.RUNSON }}
+  deploy-dev:
+    name: Deploy Dev
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment: development
+    needs: package
+    steps:
+      - name: Deploy para o ambiente de desenvolvimento
+        run: echo "Realizando deploy para o ambiente de DEV..."
+
+  deploy-prod:
+    name: Deploy Prod
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
     needs: package
     steps:
       - name: Verificar se variável DEPLOYNAME está definida
@@ -108,5 +120,6 @@ jobs:
             "body": "O workflow falhou ao tentar executar o deploy porque a variável `DEPLOYNAME` está ausente. Por favor, verifique as variáveis de ambiente definidas.",
             "labels": ["bug", "ci"]
           }'
+
       - name: Exibir mensagem de deploy
-        run: echo "Deploy realizado com sucesso"
+        run: echo "Deploy para PRODUÇÃO realizado com sucesso"
