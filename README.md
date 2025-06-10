@@ -45,3 +45,18 @@ Outros momentos que usei essa função, foi quando estava configurando o SonarCl
 ### Diferenças entre execução manual e automática
 Acredito que a principal diferença é a forma que é executada, quando a execução é automática, os parâmetros e condicionais de execução do workflow não são aplicados.
 Portanto, todo o fluxo é seguido, já que parâmetros só são informados na execução manual. Na execuçao manual o usuário pode definir quais parâmetros serão aplicados por meio da seleção, podendo modificar o workflow executado.
+
+### Etapas Realizadas no TP3
+
+1. **Parâmetros de Execução Manual (workflow_dispatch):**  
+   Adicionados parâmetros booleanos para decidir se os testes unitários e a análise do SonarCloud devem ser executados ao rodar manualmente.
+
+2. **Validação de Variável e Abertura de Issue Automática:**  
+   O job de `deploy` foi ajustado para verificar se a variável `DEPLOYNAME` está definida.  
+   Se estiver ausente, uma issue é aberta automaticamente utilizando a API do GitHub com o token `GITHUB_TOKEN`.
+
+3. **Criado ambiente de deploy dev e prod**
+    Foram criados ambientes de development e production, contendo etapas específicas e variáveis de ambiente para cada ambiente
+
+4. **Adicionada nova funcionalidade Square root**
+   Foi adicinada nova funcionalidade de Square root, bem como seus testes
