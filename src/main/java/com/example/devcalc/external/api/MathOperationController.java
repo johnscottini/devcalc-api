@@ -35,4 +35,9 @@ public class MathOperationController {
     public double divide(double a, double b) {
         return service.operation(a, b, OperationEnum.DIVIDE);
     }
+
+    @GetMapping("square-root")
+    public double squareRoot(double a) {
+        return service.operation(a, 0, OperationEnum.SQUARE_ROOT);
+    }
 }

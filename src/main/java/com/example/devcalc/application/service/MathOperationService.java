@@ -23,6 +23,9 @@ public class MathOperationService {
                 }
                 return a / b;
             }
+            case SQUARE_ROOT -> {
+                return Math.sqrt(a);
+            }
         }
         throw new IllegalArgumentException("Operation not mapped.");
     }
