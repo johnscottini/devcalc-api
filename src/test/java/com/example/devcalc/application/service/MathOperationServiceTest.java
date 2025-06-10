@@ -56,7 +56,7 @@ class MathOperationServiceTest {
 
     @Test
     void shouldFindSquareRootNumberCorrectly() {
-        double result = service.operation(10, 0, OperationEnum.SQUARE_ROOT);
-        assertEquals(100, result);
+        double result = service.operation(16, 0, OperationEnum.SQUARE_ROOT);
+        assertEquals(4, result);
     }
 }
