@@ -53,4 +53,10 @@ class MathOperationServiceTest {
         );
         assertEquals("Cannot divide by zero.", exception.getMessage());
     }
+
+    @Test
+    void shouldFindSquareRootNumberCorrectly() {
+        double result = service.operation(10, 0, OperationEnum.SQUARE_ROOT);
+        assertEquals(100, result);
+    }
 }

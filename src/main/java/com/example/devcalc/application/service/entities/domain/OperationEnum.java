@@ -7,5 +7,6 @@ public enum OperationEnum {
     ADD,
     SUBTRACT,
     MULTIPLY,
-    DIVIDE;
+    DIVIDE,
+    SQUARE_ROOT
 }
