@@ -19,7 +19,7 @@ public class MathOperationService {
             }
             case DIVIDE -> {
                 if (b == 0) {
-                    throw new ArithmeticException("Cannot divide by zero.");
+                    throw new ArithmeticException("Cannot divide by zero");
                 }
                 return a / b;
             }
@@ -27,6 +27,6 @@ public class MathOperationService {
                 return Math.sqrt(a);
             }
         }
-        throw new IllegalArgumentException("Operation not mapped.");
+        throw new IllegalArgumentException("Operation not mapped");
     }
 }
